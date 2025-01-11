@@ -1,0 +1,15 @@
+.DS_Store
+node_modules
+dist
+components
+log.txt
+omp-server.exe
+libnode.dll
+logs
+*.log
+*.dmp
+*.pdb
+plugins
+qawno
+include
+.rslib
