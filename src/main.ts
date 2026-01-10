@@ -59,7 +59,7 @@ let gObjectiveBluePlayer: number; // Tracks which blue player has the vehicle.
 let gGreenTimesCapped: number;
 let gBlueTimesCapped: number;
 
-GameMode.onInit(() => {
+GameMode.onInit(({ next }) => {
   gObjectiveReached = 0;
   gObjectiveGreenPlayer = -1;
   gObjectiveBluePlayer = -1;
@@ -89,7 +89,7 @@ GameMode.onInit(() => {
       29,
       200,
       34,
-      10
+      10,
     );
   });
   vehicles.forEach((veh) => {
@@ -112,6 +112,8 @@ GameMode.onInit(() => {
   console.log("\n----------------------------------");
   console.log("  Rivershell by Kye 2006-2013\n");
   console.log("----------------------------------\n");
+
+  return next();
 });
 
 function setPlayerToTeamColor(player: Player) {
@@ -165,7 +167,7 @@ PlayerEvent.onStateChange(({ player, newState, next }) => {
       new GameText(
         "~w~Take the ~y~boat ~w~back to the ~r~spawn!",
         3000,
-        5
+        5,
       ).forPlayer(player);
 
       if (pVar_.checkPoint) {
@@ -192,7 +194,7 @@ PlayerEvent.onStateChange(({ player, newState, next }) => {
       new GameText(
         "~w~Take the ~y~boat ~w~back to the ~r~spawn!",
         3000,
-        5
+        5,
       ).forPlayer(player);
 
       if (pVar_.checkPoint) {
@@ -309,13 +311,13 @@ PlayerEvent.onSpawn(({ player, next }) => {
     new GameText(
       "Defend the ~g~GREEN ~w~team's ~y~Reefer~n~~w~Capture the ~b~BLUE ~w~team's ~y~Reefer",
       6000,
-      5
+      5,
     ).forPlayer(player);
   } else if (gTeam.get(player) === TEAM_BLUE) {
     new GameText(
       "Defend the ~b~BLUE ~w~team's ~y~Reefer~n~~w~Capture the ~g~GREEN ~w~team's ~y~Reefer",
       6000,
-      5
+      5,
     ).forPlayer(player);
   }
 
@@ -413,13 +415,13 @@ VehicleEvent.onStreamIn(({ next, vehicle, forPlayer }) => {
       Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(
         forPlayer,
         true,
-        true
+        true,
       ); // objective; locked
     } else if (gTeam.get(forPlayer) === TEAM_BLUE) {
       Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(
         forPlayer,
         true,
-        false
+        false,
       ); // objective; unlocked
     }
   } else if (vehicle.id === OBJECTIVE_VEHICLE_GREEN) {
@@ -427,13 +429,13 @@ VehicleEvent.onStreamIn(({ next, vehicle, forPlayer }) => {
       Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(
         forPlayer,
         true,
-        true
+        true,
       ); // objective; locked
     } else if (gTeam.get(forPlayer) === TEAM_GREEN) {
       Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(
         forPlayer,
         true,
-        false
+        false,
       ); // objective; unlocked
     }
   }
@@ -487,7 +489,7 @@ function createMapObject(
   z: number,
   rx: number,
   ry: number,
-  rz: number
+  rz: number,
 ) {
   const obj = new DynamicObject({
     modelId,
