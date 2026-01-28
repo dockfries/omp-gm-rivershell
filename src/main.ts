@@ -1,5 +1,6 @@
 // Rivershell v2 by Kye - 2006-2013
 
+import { logger } from "./logger";
 import {
   DynamicCheckPointEvent,
   DynamicCheckpoint,
@@ -109,9 +110,9 @@ GameMode.onInit(({ next }) => {
     createMapObject(modelId, x, y, z, rx, ry, rz);
   });
 
-  console.log("\n----------------------------------");
-  console.log("  Rivershell by Kye 2006-2013\n");
-  console.log("----------------------------------\n");
+  logger.info("----------------------------------");
+  logger.info("  Rivershell by Kye 2006-2013");
+  logger.info("----------------------------------");
 
   return next();
 });
@@ -146,7 +147,7 @@ function setPlayerTeamFromClass(player: Player, classId: number) {
 
 function exitTheGameMode() {
   playSoundForAll(1186, 0.0, 0.0, 0.0); // Stops the music
-  // console.log("Exiting Game Mode");
+  // logger.info("Exiting Game Mode");
   GameMode.sendRconCommand("gmx");
 }
 
