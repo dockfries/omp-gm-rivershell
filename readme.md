@@ -7,6 +7,7 @@ This repository contains the RiverShell sample game mode written using [infernus
 
 ```sh
 pnpm dlx @infernus/create-app@latest install
+pnpm install --dev
 pnpm install
 pnpm build
 pnpm serve
