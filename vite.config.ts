@@ -9,7 +9,9 @@ export default defineConfig(({ mode }) => {
       ssr: true,
       lib: {
         formats: ["es"],
-        entry: "src/main.ts",
+        entry: {
+          bundle: "src/main.ts",
+        },
       },
       sourcemap: isDev,
       watch: isDev
@@ -24,7 +26,6 @@ export default defineConfig(({ mode }) => {
           minify: !isDev,
           cleanDir: !isDev,
           dir: "dist",
-          entryFileNames: "bundle.js",
         },
       },
     },
