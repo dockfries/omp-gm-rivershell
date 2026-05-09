@@ -79,19 +79,7 @@ GameMode.onInit(({ next }) => {
 
   playerClasses.forEach((pClass) => {
     const [modelId, spawnX, spawnY, spawnZ, zAngle] = pClass;
-    GameMode.addPlayerClass(
-      modelId,
-      spawnX,
-      spawnY,
-      spawnZ,
-      zAngle,
-      31,
-      100,
-      29,
-      200,
-      34,
-      10,
-    );
+    GameMode.addPlayerClass(modelId, spawnX, spawnY, spawnZ, zAngle, 31, 100, 29, 200, 34, 10);
   });
   vehicles.forEach((veh) => {
     const [modelId, x, y, z, zAngle, color1, color2] = veh;
@@ -159,17 +147,10 @@ PlayerEvent.onStateChange(({ player, newState, next }) => {
   if (newState === PlayerStateEnum.DRIVER) {
     const vehicle = player.getVehicle()!;
 
-    if (
-      gTeam.get(player) === TEAM_GREEN &&
-      vehicle.id === OBJECTIVE_VEHICLE_GREEN
-    ) {
+    if (gTeam.get(player) === TEAM_GREEN && vehicle.id === OBJECTIVE_VEHICLE_GREEN) {
       // It's the objective vehicle
       player.setColor(OBJECTIVE_COLOR);
-      new GameText(
-        "~w~Take the ~y~boat ~w~back to the ~r~spawn!",
-        3000,
-        5,
-      ).forPlayer(player);
+      new GameText("~w~Take the ~y~boat ~w~back to the ~r~spawn!", 3000, 5).forPlayer(player);
 
       if (pVar_.checkPoint) {
         pVar_.checkPoint.destroy();
@@ -186,17 +167,10 @@ PlayerEvent.onStateChange(({ player, newState, next }) => {
       gObjectiveGreenPlayer = player.id;
     }
 
-    if (
-      gTeam.get(player) === TEAM_BLUE &&
-      vehicle.id === OBJECTIVE_VEHICLE_BLUE
-    ) {
+    if (gTeam.get(player) === TEAM_BLUE && vehicle.id === OBJECTIVE_VEHICLE_BLUE) {
       // It's the objective vehicle
       player.setColor(OBJECTIVE_COLOR);
-      new GameText(
-        "~w~Take the ~y~boat ~w~back to the ~r~spawn!",
-        3000,
-        5,
-      ).forPlayer(player);
+      new GameText("~w~Take the ~y~boat ~w~back to the ~r~spawn!", 3000, 5).forPlayer(player);
 
       if (pVar_.checkPoint) {
         pVar_.checkPoint.destroy();
@@ -361,10 +335,7 @@ DynamicCheckPointEvent.onPlayerEnter(({ player, cp, next }) => {
       pVeh.setRespawn();
     }
     return next();
-  } else if (
-    pVeh.id === OBJECTIVE_VEHICLE_BLUE &&
-    gTeam.get(player) === TEAM_BLUE
-  ) {
+  } else if (pVeh.id === OBJECTIVE_VEHICLE_BLUE && gTeam.get(player) === TEAM_BLUE) {
     // Blue OBJECTIVE REACHED.
     gBlueTimesCapped++;
     player.setScore(player.getScore() + 5);
@@ -413,31 +384,15 @@ VehicleEvent.onStreamIn(({ next, vehicle, forPlayer }) => {
   // applied to vehicles that don't exist in the player's world.
   if (vehicle.id === OBJECTIVE_VEHICLE_BLUE) {
     if (gTeam.get(forPlayer) === TEAM_GREEN) {
-      Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(
-        forPlayer,
-        true,
-        true,
-      ); // objective; locked
+      Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(forPlayer, true, true); // objective; locked
     } else if (gTeam.get(forPlayer) === TEAM_BLUE) {
-      Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(
-        forPlayer,
-        true,
-        false,
-      ); // objective; unlocked
+      Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(forPlayer, true, false); // objective; unlocked
     }
   } else if (vehicle.id === OBJECTIVE_VEHICLE_GREEN) {
     if (gTeam.get(forPlayer) === TEAM_BLUE) {
-      Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(
-        forPlayer,
-        true,
-        true,
-      ); // objective; locked
+      Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(forPlayer, true, true); // objective; locked
     } else if (gTeam.get(forPlayer) === TEAM_GREEN) {
-      Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(
-        forPlayer,
-        true,
-        false,
-      ); // objective; unlocked
+      Vehicle.getInstance(vehicle.id)!.setParamsForPlayer(forPlayer, true, false); // objective; unlocked
     }
   }
   return next();
@@ -454,10 +409,7 @@ PlayerEvent.onUpdate(({ player, next }) => {
       return next();
     }
     // Allow respawn after an arbitrary time has passed
-    if (
-      Date.now() - pVar_.lastDeathTick >
-      ALLOW_RESPAWN_AFTER_N_SECONDS * 1000
-    ) {
+    if (Date.now() - pVar_.lastDeathTick > ALLOW_RESPAWN_AFTER_N_SECONDS * 1000) {
       player.toggleSpectating(false);
       return next();
     }
@@ -526,10 +478,7 @@ function spectatePlayer(player: Player, specPlayer: Player) {
       player.spectatePlayer(specPlayer);
       pVar_.spectateMode = SPECTATE_MODE_PLAYER;
     }
-  } else if (
-    specState === PlayerStateEnum.DRIVER ||
-    specState === PlayerStateEnum.PASSENGER
-  ) {
+  } else if (specState === PlayerStateEnum.DRIVER || specState === PlayerStateEnum.PASSENGER) {
     if (pVar_.spectateMode !== SPECTATE_MODE_VEHICLE) {
       player.spectateVehicle(specPlayer.getVehicle()!);
       pVar_.spectateMode = SPECTATE_MODE_VEHICLE;

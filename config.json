@@ -90,13 +90,8 @@
   },
   "password": "",
   "pawn": {
-    "legacy_plugins": [
-      "streamer",
-      "samp-node"
-    ],
-    "main_scripts": [
-      "polyfill 1"
-    ],
+    "legacy_plugins": ["streamer", "samp-node"],
+    "main_scripts": ["polyfill 1"],
     "side_scripts": []
   },
   "rcon": {
